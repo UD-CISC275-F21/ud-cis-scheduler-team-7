@@ -6,9 +6,7 @@ export function Semester(props:{year :number,season:string,courses:Course[]}): J
     const[year,SetYear]=useState(props.year);
     let i:number;
     function clearSemester(){
-        for(i=0;courses[i]==null;i++){
-            SetCourse(null);
-        }
+        SetCourse(null);
     }
     function clearYear(){
         SetYear(0);
