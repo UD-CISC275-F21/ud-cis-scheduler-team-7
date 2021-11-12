@@ -14,7 +14,7 @@ export function AddCourseMenu(props:{trigger:boolean;courses:Course[] ; setTrigg
             <h3>Course list</h3>
             <ul className="nav navbar-nav">
                 {COURSES.map((Course, i) => {
-                    return <li key={i}><strong>{Course.name}</strong> {Course.description} <button onClick={()=>addCourse(Course)}>Add course</button></li>;
+                    return <li key={i}><strong>{Course.name}</strong> {Course.description} <button className="btn btn-light btn-sm" onClick={()=>addCourse(Course)}>Add course</button></li>;
                 })}
             </ul>
         </div>

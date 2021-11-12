@@ -21,13 +21,13 @@ const EditCourse:React.FC<IProps> = ({editTmpId,editAddCourse}) => {
         <div >
             <br/>
             <form onSubmit={onSubmit} >
-                <p><label><li>Course Name</li></label></p>
+                <p><label><li>Course ID</li></label></p>
                 <input type='text' placeholder='edit course name' value={name} onChange={(e)=>setName(e.target.value)}/>
                 <p></p>
-                <p><label><li>Description</li></label></p>
+                <p><label><li>Name</li></label></p>
                 <input type='text' placeholder='edit description' value={description} onChange={(e)=>setDescription(e.target.value)}/>
                 <p></p>
-                <p><label><li>Credit</li></label></p>
+                <p><label><li>Credits</li></label></p>
                 <input type='number' placeholder='edit credit'value={credits}  onChange={(e)=>setCredits(parseInt(e.target.value))}/>
     
                 <p><input type="submit" className="btn btn-primary m-2" value="Save course"/></p>

@@ -14,7 +14,7 @@ import "./App.css";
 import "./Components/Semester.css";
 import "./Components/Menu.css";
 function App(): JSX.Element {
-    const [currentCourses, setCurrentCourses] = useState([COURSES[0],COURSES[1],COURSES[2],COURSES[3]]as Course[]);
+    const [currentCourses, setCurrentCourses] = useState([COURSES[0],COURSES[1],COURSES[2],COURSES[3]] as Course[]);
     const [fallsemesters, setFallSemesters] = useState([1,2,3,4]);
     const [springsemesters, setSpringSemesters] = useState([1,2,3,4]);
     function addFallSemester(semesters: number[]){
@@ -44,6 +44,7 @@ function App(): JSX.Element {
         setSpringSemesters(scopy);
     }
     function setDefault(){
+        setCurrentCourses([COURSES[0],COURSES[1],COURSES[2],COURSES[3]]);
         setFallSemesters([1,2,3,4]);
         setSpringSemesters([1,2,3,4]);
     }
