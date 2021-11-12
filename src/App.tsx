@@ -48,6 +48,29 @@ function App(): JSX.Element {
         setFallSemesters(fcopy);
         setSpringSemesters(scopy);
     }
+    /*function saveDegreePlan(){
+        //const jsonData = { age: 12, name: "Someone" };
+        return (
+            <div className="App">
+                <a
+                    href={
+                        "data:text/json;charset=utf-8," +
+                        encodeURIComponent(JSON.stringify(currentCourses))
+                    }
+                    download="save.json"
+                >
+                Download JSON
+                </a>
+            </div>
+        );
+    }*/
+
+    function saveDegreePlan(){
+        0;
+    }
+
+
+ 
     function setDefault(){
         setFallSemesters([1,2,3,4]);
         setSpringSemesters([1,2,3,4]);
@@ -73,6 +96,8 @@ function App(): JSX.Element {
                         </div>
                         <button className="btn btn-light btn-sm" onClick={()=>addFallSemester(fallsemesters)}>Add fall semester</button>
                         <button className="btn btn-light btn-sm" onClick={()=>removeFallSemester(fallsemesters)}>Remove last fall semester</button>
+                        <button className="btn btn-light btn-sm" onClick={()=>saveDegreePlan()}>Save Degree Plan</button>
+
                         {fallsemesters.map((i)=>{
                             return(
                                 <Semester key = {i}
