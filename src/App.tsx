@@ -26,6 +26,9 @@ function App(): JSX.Element {
     const [fallsemesters, setFallSemesters]=useState([defaultfall1,defaultfall2,defaultfall3,defaultfall4]);
     const [springsemesters, setSpringSemesters]=useState([defaultspring1,defaultspring2,defaultspring3,defaultspring4]);
     const [clear,setClear]=useState(true);
+
+    //useState for saving
+    const [schedule, setSchedule] = useState<Course[]>([]);
     function useForceUpdate(){
         const [value,setValue] = useState(0); // integer state
         value;
@@ -138,7 +141,7 @@ function App(): JSX.Element {
                             <div className="col">
                                 <div className="row">
                                     <div className="col">
-                                        <button className="btn btn-light btn-sm">Save plan</button>
+                                        <button className="btn btn-light btn-sm" onClick={() => localStorage.setItem("scheduler-data", JSON.stringify(schedule))}>Save plan</button>
                                         <button className="btn btn-light btn-sm">Load plan</button>
                                     </div>
                                 </div>
