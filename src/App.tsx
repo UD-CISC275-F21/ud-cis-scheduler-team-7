@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Components/Menu.css";
@@ -28,7 +28,9 @@ function App(): JSX.Element {
     const [clear,setClear]=useState(true);
 
     //useState for saving
-    const [schedule, setSchedule] = useState<Course[]>([]);
+    const [schedule, setSchedule] = useState<Course[][]>([]);
+    useEffect(() => setSchedule(JSON.parse(localStorage.getItem("scheduler-data") || "[]")), []);
+    
     function useForceUpdate(){
         const [value,setValue] = useState(0); // integer state
         value;
