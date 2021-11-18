@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Components/Menu.css";
@@ -13,6 +13,22 @@ import Course from "./Interfaces/Course";
 import "./App.css";
 import "./Components/Semester.css";
 import "./Components/Menu.css";
+
+export const LOCAL_STORAGE_COURSES = "current-courses";
+export const INITIAL_COURSES:Course[]=[
+    COURSES[0],COURSES[14],COURSES[15],COURSES[20],COURSES[3],COURSES[4],COURSES[19],COURSES[34],COURSES[7],COURSES[8],COURSES[10],COURSES[33],COURSES[12],COURSES[11],COURSES[36],COURSES[38]
+];
+
+export function getLocalStorageFall(): Course[]{
+    const defaultCourses : string| null= localStorage.getItem(LOCAL_STORAGE_COURSES);
+    if(defaultCourses===null){
+        return [...INITIAL_COURSES];
+    }else{
+        return JSON.parse(defaultCourses);
+    }
+}
+
+
 function App(): JSX.Element {
     const defaultfall:Course[][]=[[COURSES[0],COURSES[14],COURSES[15],COURSES[20]],[COURSES[3],COURSES[4],COURSES[19],COURSES[34]],[COURSES[7],COURSES[8],COURSES[10],COURSES[33]],[COURSES[12],COURSES[11],COURSES[36],COURSES[38]]];
     const defaultspring:Course[][]=[[COURSES[1],COURSES[2],COURSES[21],COURSES[40]],[COURSES[5],COURSES[9],COURSES[18],COURSES[35]],[COURSES[6],COURSES[34],COURSES[16],COURSES[41]],[COURSES[13],COURSES[43],COURSES[42],COURSES[45]]];
@@ -20,9 +36,12 @@ function App(): JSX.Element {
     const [springsemesters, setSpringSemesters]=useState(defaultspring);
     const [clear,setClear]=useState(true);
 
-    //useState for saving
-    const [schedule, setSchedule] = useState<Course[][]>([]);
-    useEffect(() => setSchedule(JSON.parse(localStorage.getItem("scheduler-data") || "[]")), []);
+    
+    const [fallCourses, setfallCourses] = useState<Course[]>(getLocalStorageFall());
+    const save=()=>{
+        console.log("saved");
+        localStorage.setItem(LOCAL_STORAGE_COURSES,JSON.stringify(fallCourses));
+    };
     
     function useForceUpdate(){
         const [value,setValue] = useState(0); // integer state
@@ -141,7 +160,7 @@ function App(): JSX.Element {
                             <div className="col">
                                 <div className="row">
                                     <div className="col">
-                                        <button className="btn btn-light btn-sm" onClick={() => localStorage.setItem("scheduler-data", JSON.stringify(schedule))}>Save plan</button>
+                                        <button className="btn btn-light btn-sm" onClick={save}>Save plan</button>
                                         <button className="btn btn-light btn-sm">Load plan</button>
                                     </div>
                                 </div>
