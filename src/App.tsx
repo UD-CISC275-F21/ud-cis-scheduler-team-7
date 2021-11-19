@@ -15,11 +15,11 @@ import "./Components/Semester.css";
 import "./Components/Menu.css";
 
 export const LOCAL_STORAGE_COURSES = "current-courses";
-export const INITIAL_COURSES:Course[]=[
-    COURSES[0],COURSES[14],COURSES[15],COURSES[20],COURSES[3],COURSES[4],COURSES[19],COURSES[34],COURSES[7],COURSES[8],COURSES[10],COURSES[33],COURSES[12],COURSES[11],COURSES[36],COURSES[38]
+export const INITIAL_COURSES:Course[][]=[
+    [COURSES[0],COURSES[14],COURSES[15],COURSES[20],COURSES[3],COURSES[4],COURSES[19],COURSES[34],COURSES[7],COURSES[8],COURSES[10],COURSES[33],COURSES[12],COURSES[11],COURSES[36],COURSES[38]]
 ];
 
-export function getLocalStorageFall(): Course[]{
+export function getLocalStorageFall(): Course[][]{
     const defaultCourses : string| null= localStorage.getItem(LOCAL_STORAGE_COURSES);
     if(defaultCourses===null){
         return [...INITIAL_COURSES];
@@ -37,7 +37,7 @@ function App(): JSX.Element {
     const [clear,setClear]=useState(true);
 
     
-    const [fallCourses, setfallCourses] = useState<Course[]>(getLocalStorageFall());
+    const [fallCourses, setfallCourses] = useState<Course[][]>(getLocalStorageFall());
     const save=()=>{
         console.log("saved");
         localStorage.setItem(LOCAL_STORAGE_COURSES,JSON.stringify(fallCourses));
