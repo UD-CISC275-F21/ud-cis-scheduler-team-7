@@ -16,7 +16,7 @@ import "./Components/Menu.css";
 
 export const LOCAL_STORAGE_COURSES = "current-courses";
 export const INITIAL_COURSES:Course[][]=[
-    [COURSES[0],COURSES[14],COURSES[15],COURSES[20],COURSES[3],COURSES[4],COURSES[19],COURSES[34],COURSES[7],COURSES[8],COURSES[10],COURSES[33],COURSES[12],COURSES[11],COURSES[36],COURSES[38]]
+    [COURSES[0],COURSES[14],COURSES[15],COURSES[20]],[COURSES[3],COURSES[4],COURSES[19],COURSES[34]],[COURSES[7],COURSES[8],COURSES[10],COURSES[33]],[COURSES[12],COURSES[11],COURSES[36],COURSES[38]]
 ];
 
 export function getLocalStorageFall(): Course[][]{
@@ -28,7 +28,6 @@ export function getLocalStorageFall(): Course[][]{
     }
 }
 
-
 function App(): JSX.Element {
     const [courseList,setCourseList]=useState(COURSES as Course[]);
     const defaultfall:Course[][]=[[courseList[0],courseList[14],courseList[15],courseList[20]],[courseList[3],courseList[4],courseList[19],courseList[34]],[courseList[7],courseList[8],courseList[10],courseList[33]],[courseList[12],courseList[11],courseList[36],courseList[38]]];
@@ -36,26 +35,31 @@ function App(): JSX.Element {
     const [fallsemesters, setFallSemesters]=useState(defaultfall);
     const [springsemesters, setSpringSemesters]=useState(defaultspring);
     const [clear,setClear]=useState(true);
-<<<<<<< HEAD
+    //const [plan, setPlan] = useState<Course[]>(COURSES as Course[]);
 
-    
     const [fallCourses, setfallCourses] = useState<Course[][]>(getLocalStorageFall());
     const save=()=>{
         console.log("saved");
         localStorage.setItem(LOCAL_STORAGE_COURSES,JSON.stringify(fallCourses));
     };
-    
-    function useForceUpdate(){
-        const [value,setValue] = useState(0); // integer state
-        value;
-        return () => setValue(value => value + 1); // update the state to force render
+
+    //download as csv
+    function download(){
+        function semCourses(c: Course[]){
+            const semCourse = c.map((q: Course) => q.name + "," + q.description + "," + q.credits);
+            return semCourse;
+        }
+        const csvContent = "data:text/csv;charset=utf-8," + "Course," + "Name," + "Credits," + courseList.map((s: Course) => "\n" +s.name + "," + s.description + "," + semCourses(COURSES));
+        const hiddenElement = document.createElement("a");
+        hiddenElement.href = encodeURI(csvContent);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "Schedule.csv";
+        hiddenElement.click();
     }
-    function addSemester(fsemesters:Course[][],ssemesters:Course[][],season:boolean){
-        if(season==true){
-=======
+
+
     function addSemester(fsemesters:Course[][],ssemesters:Course[][],season:string){
         if(season=="fall"){
->>>>>>> main
             setFallSemesters([...fsemesters,[]]);
         }else{
             setSpringSemesters([...ssemesters,[]]);
@@ -119,6 +123,7 @@ function App(): JSX.Element {
         setSpringSemesters(defaultspring);
         setClear(true);
     }
+    
     return (
         <div className="App">
             <Welcome />
@@ -172,6 +177,7 @@ function App(): JSX.Element {
                                     <div className="col">
                                         <button className="btn btn-light btn-sm" onClick={save}>Save plan</button>
                                         <button className="btn btn-light btn-sm">Load plan</button>
+                                        <button className="btn btn-light btn-sm" onClick={download}>Download</button>
                                     </div>
                                 </div>
                                 <button className="btn btn-light btn-sm" onClick={()=>addSemester(fallsemesters,springsemesters,"spring")}>Add spring semester</button>
