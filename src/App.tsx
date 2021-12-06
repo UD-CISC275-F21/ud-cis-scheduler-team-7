@@ -38,24 +38,11 @@ function App(): JSX.Element {
     //const [plan, setPlan] = useState<Course[]>(COURSES as Course[]);
 
     const [fallCourses, setfallCourses] = useState<Course[][]>(getLocalStorageFall());
+    //const [fallsemesters, setFallSemesters]= useState<Course[][]>(getLocalStorageFall());
     const save=()=>{
         console.log("saved");
         localStorage.setItem(LOCAL_STORAGE_COURSES,JSON.stringify(fallCourses));
     };
-
-    //download as csv
-    function download(){
-        function semCourses(c: Course[]){
-            const semCourse = c.map((q: Course) => q.name + "," + q.description + "," + q.credits);
-            return semCourse;
-        }
-        const csvContent = "data:text/csv;charset=utf-8," + "Course," + "Name," + "Credits," + courseList.map((s: Course) => "\n" +s.name + "," + s.description + "," + semCourses(COURSES));
-        const hiddenElement = document.createElement("a");
-        hiddenElement.href = encodeURI(csvContent);
-        hiddenElement.target = "_blank";
-        hiddenElement.download = "Schedule.csv";
-        hiddenElement.click();
-    }
 
 
     function addSemester(fsemesters:Course[][],ssemesters:Course[][],season:string){
@@ -124,6 +111,22 @@ function App(): JSX.Element {
         setClear(true);
     }
     
+
+    function download(){
+        function semCourses(c: Course[]){
+            const semCourse = c.map((co: Course) => co.name + "," + co.description + "," + co.credits + "\n");
+            return semCourse;
+        }
+    
+        const csvContent = "data:text/csv;charset=utf-8," + "Fall Semesters: \n" + "Course, " + "Name, " + "Credits\n" + fallsemesters.map((f: Course[]) => semCourses(f) + "\n") + "\nSpring Semesters: \n" + "Course, " + "Name, " + "Credits\n" + springsemesters.map((sp: Course[]) => semCourses(sp) +"\n");
+
+        const hiddenElement = document.createElement("a");
+        hiddenElement.href = encodeURI(csvContent);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "Schedule.csv";
+        hiddenElement.click();
+    }
+ 
     return (
         <div className="App">
             <Welcome />
